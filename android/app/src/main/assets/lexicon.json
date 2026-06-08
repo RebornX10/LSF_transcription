@@ -1,0 +1,514 @@
+{
+  "meta": {
+    "note": "Curated LSF (Langue des Signes Française) beginner vocabulary catalogue. 'gloss' is the LSF gloss (uppercase French, the convention). 'tip' describes how the sign is made where it is well established; absent when not. Train each sign from the web UI to make it recognisable.",
+    "sources": [
+      "https://lecolefrancaise.fr/10-mots-de-base-langue-des-signes/",
+      "https://dico.elix-lsf.fr/",
+      "https://clic-campus.fr/vocabulaire-lsf/bases-de-la-lsf/",
+      "https://en.wikipedia.org/wiki/French_manual_alphabet"
+    ]
+  },
+  "words": [
+    {
+      "gloss": "BONJOUR",
+      "fr": "bonjour",
+      "en": "hello",
+      "category": "Salutations",
+      "tip": "Main plate ouverte devant la bouche, puis avancer vers l'avant."
+    },
+    {
+      "gloss": "BONSOIR",
+      "fr": "bonsoir",
+      "en": "good evening",
+      "category": "Salutations"
+    },
+    {
+      "gloss": "SALUT",
+      "fr": "salut",
+      "en": "hi/bye",
+      "category": "Salutations",
+      "tip": "Main ouverte près de la tempe, petit mouvement."
+    },
+    {
+      "gloss": "AU REVOIR",
+      "fr": "au revoir",
+      "en": "goodbye",
+      "category": "Salutations",
+      "tip": "Agiter la main ouverte."
+    },
+    {
+      "gloss": "MERCI",
+      "fr": "merci",
+      "en": "thank you",
+      "category": "Salutations",
+      "tip": "Doigts au menton, puis avancer la main vers l'avant."
+    },
+    {
+      "gloss": "S'IL VOUS PLAÎT",
+      "fr": "s'il vous plaît",
+      "en": "please",
+      "category": "Salutations"
+    },
+    {
+      "gloss": "PARDON",
+      "fr": "pardon",
+      "en": "sorry",
+      "category": "Salutations",
+      "tip": "Poing fermé qui frotte la poitrine en cercle."
+    },
+    {
+      "gloss": "OUI",
+      "fr": "oui",
+      "en": "yes",
+      "category": "Réponses",
+      "tip": "Poing fermé qui bascule (comme une tête qui acquiesce)."
+    },
+    {
+      "gloss": "NON",
+      "fr": "non",
+      "en": "no",
+      "category": "Réponses",
+      "tip": "Index et majeur qui se referment sur le pouce."
+    },
+    {
+      "gloss": "ÇA VA",
+      "fr": "ça va",
+      "en": "I'm fine / okay",
+      "category": "Réponses"
+    },
+    {
+      "gloss": "D'ACCORD",
+      "fr": "d'accord",
+      "en": "okay/agree",
+      "category": "Réponses"
+    },
+    {
+      "gloss": "JE NE SAIS PAS",
+      "fr": "je ne sais pas",
+      "en": "I don't know",
+      "category": "Réponses"
+    },
+    {
+      "gloss": "BRAVO",
+      "fr": "bravo",
+      "en": "well done",
+      "category": "Réponses"
+    },
+    {
+      "gloss": "ATTENDS",
+      "fr": "attends",
+      "en": "wait",
+      "category": "Réponses"
+    },
+    {
+      "gloss": "JE T'AIME",
+      "fr": "je t'aime",
+      "en": "I love you",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "CONTENT",
+      "fr": "content",
+      "en": "happy",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "TRISTE",
+      "fr": "triste",
+      "en": "sad",
+      "category": "Émotions",
+      "tip": "Index qui glissent vers le bas le long des joues, comme des larmes ; visage triste."
+    },
+    {
+      "gloss": "FÂCHÉ",
+      "fr": "fâché",
+      "en": "angry",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "PEUR",
+      "fr": "peur",
+      "en": "afraid",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "FATIGUÉ",
+      "fr": "fatigué",
+      "en": "tired",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "MALADE",
+      "fr": "malade",
+      "en": "sick",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "BIEN",
+      "fr": "bien",
+      "en": "good/well",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "MAL",
+      "fr": "mal",
+      "en": "bad",
+      "category": "Émotions"
+    },
+    {
+      "gloss": "FAMILLE",
+      "fr": "famille",
+      "en": "family",
+      "category": "Famille"
+    },
+    {
+      "gloss": "MÈRE",
+      "fr": "mère",
+      "en": "mother",
+      "category": "Famille"
+    },
+    {
+      "gloss": "PÈRE",
+      "fr": "père",
+      "en": "father",
+      "category": "Famille"
+    },
+    {
+      "gloss": "FRÈRE",
+      "fr": "frère",
+      "en": "brother",
+      "category": "Famille"
+    },
+    {
+      "gloss": "SŒUR",
+      "fr": "sœur",
+      "en": "sister",
+      "category": "Famille"
+    },
+    {
+      "gloss": "ENFANT",
+      "fr": "enfant",
+      "en": "child",
+      "category": "Famille"
+    },
+    {
+      "gloss": "BÉBÉ",
+      "fr": "bébé",
+      "en": "baby",
+      "category": "Famille",
+      "tip": "Bras croisés qui bercent."
+    },
+    {
+      "gloss": "AMI",
+      "fr": "ami",
+      "en": "friend",
+      "category": "Famille"
+    },
+    {
+      "gloss": "HOMME",
+      "fr": "homme",
+      "en": "man",
+      "category": "Famille"
+    },
+    {
+      "gloss": "FEMME",
+      "fr": "femme",
+      "en": "woman",
+      "category": "Famille"
+    },
+    {
+      "gloss": "GARÇON",
+      "fr": "garçon",
+      "en": "boy",
+      "category": "Famille"
+    },
+    {
+      "gloss": "FILLE",
+      "fr": "fille",
+      "en": "girl",
+      "category": "Famille"
+    },
+    {
+      "gloss": "MANGER",
+      "fr": "manger",
+      "en": "to eat",
+      "category": "Verbes",
+      "tip": "Main en pince qui se porte vers la bouche."
+    },
+    {
+      "gloss": "BOIRE",
+      "fr": "boire",
+      "en": "to drink",
+      "category": "Verbes",
+      "tip": "Main en C qui mime le verre vers la bouche."
+    },
+    {
+      "gloss": "DORMIR",
+      "fr": "dormir",
+      "en": "to sleep",
+      "category": "Verbes",
+      "tip": "Main à plat contre la joue, tête inclinée."
+    },
+    {
+      "gloss": "PARLER",
+      "fr": "parler",
+      "en": "to speak",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "SIGNER",
+      "fr": "signer",
+      "en": "to sign",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "COMPRENDRE",
+      "fr": "comprendre",
+      "en": "to understand",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "VOULOIR",
+      "fr": "vouloir",
+      "en": "to want",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "POUVOIR",
+      "fr": "pouvoir",
+      "en": "can/be able",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "ALLER",
+      "fr": "aller",
+      "en": "to go",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "VENIR",
+      "fr": "venir",
+      "en": "to come",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "VOIR",
+      "fr": "voir",
+      "en": "to see",
+      "category": "Verbes",
+      "tip": "Main en V partant des yeux vers l'avant (le regard qui se dirige)."
+    },
+    {
+      "gloss": "AIMER",
+      "fr": "aimer",
+      "en": "to like/love",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "TRAVAILLER",
+      "fr": "travailler",
+      "en": "to work",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "APPRENDRE",
+      "fr": "apprendre",
+      "en": "to learn",
+      "category": "Verbes"
+    },
+    {
+      "gloss": "QUI",
+      "fr": "qui",
+      "en": "who",
+      "category": "Questions"
+    },
+    {
+      "gloss": "QUOI",
+      "fr": "quoi",
+      "en": "what",
+      "category": "Questions"
+    },
+    {
+      "gloss": "OÙ",
+      "fr": "où",
+      "en": "where",
+      "category": "Questions"
+    },
+    {
+      "gloss": "QUAND",
+      "fr": "quand",
+      "en": "when",
+      "category": "Questions"
+    },
+    {
+      "gloss": "COMMENT",
+      "fr": "comment",
+      "en": "how",
+      "category": "Questions"
+    },
+    {
+      "gloss": "POURQUOI",
+      "fr": "pourquoi",
+      "en": "why",
+      "category": "Questions"
+    },
+    {
+      "gloss": "COMBIEN",
+      "fr": "combien",
+      "en": "how much",
+      "category": "Questions"
+    },
+    {
+      "gloss": "AUJOURD'HUI",
+      "fr": "aujourd'hui",
+      "en": "today",
+      "category": "Temps"
+    },
+    {
+      "gloss": "DEMAIN",
+      "fr": "demain",
+      "en": "tomorrow",
+      "category": "Temps"
+    },
+    {
+      "gloss": "HIER",
+      "fr": "hier",
+      "en": "yesterday",
+      "category": "Temps"
+    },
+    {
+      "gloss": "MAINTENANT",
+      "fr": "maintenant",
+      "en": "now",
+      "category": "Temps"
+    },
+    {
+      "gloss": "MATIN",
+      "fr": "matin",
+      "en": "morning",
+      "category": "Temps"
+    },
+    {
+      "gloss": "SOIR",
+      "fr": "soir",
+      "en": "evening",
+      "category": "Temps"
+    },
+    {
+      "gloss": "JOUR",
+      "fr": "jour",
+      "en": "day",
+      "category": "Temps"
+    },
+    {
+      "gloss": "SEMAINE",
+      "fr": "semaine",
+      "en": "week",
+      "category": "Temps"
+    },
+    {
+      "gloss": "EAU",
+      "fr": "eau",
+      "en": "water",
+      "category": "Nourriture"
+    },
+    {
+      "gloss": "PAIN",
+      "fr": "pain",
+      "en": "bread",
+      "category": "Nourriture"
+    },
+    {
+      "gloss": "LAIT",
+      "fr": "lait",
+      "en": "milk",
+      "category": "Nourriture",
+      "tip": "Poing qui se serre et desserre (mime la traite)."
+    },
+    {
+      "gloss": "CAFÉ",
+      "fr": "café",
+      "en": "coffee",
+      "category": "Nourriture"
+    },
+    {
+      "gloss": "POMME",
+      "fr": "pomme",
+      "en": "apple",
+      "category": "Nourriture"
+    },
+    {
+      "gloss": "REPAS",
+      "fr": "repas",
+      "en": "meal",
+      "category": "Nourriture"
+    },
+    {
+      "gloss": "MAISON",
+      "fr": "maison",
+      "en": "house",
+      "category": "Lieux",
+      "tip": "Les deux mains dessinent un toit."
+    },
+    {
+      "gloss": "ÉCOLE",
+      "fr": "école",
+      "en": "school",
+      "category": "Lieux"
+    },
+    {
+      "gloss": "TRAVAIL",
+      "fr": "travail",
+      "en": "work",
+      "category": "Lieux"
+    },
+    {
+      "gloss": "VILLE",
+      "fr": "ville",
+      "en": "town/city",
+      "category": "Lieux"
+    },
+    {
+      "gloss": "MAGASIN",
+      "fr": "magasin",
+      "en": "shop",
+      "category": "Lieux"
+    },
+    {
+      "gloss": "ROUGE",
+      "fr": "rouge",
+      "en": "red",
+      "category": "Couleurs"
+    },
+    {
+      "gloss": "BLEU",
+      "fr": "bleu",
+      "en": "blue",
+      "category": "Couleurs"
+    },
+    {
+      "gloss": "VERT",
+      "fr": "vert",
+      "en": "green",
+      "category": "Couleurs"
+    },
+    {
+      "gloss": "JAUNE",
+      "fr": "jaune",
+      "en": "yellow",
+      "category": "Couleurs"
+    },
+    {
+      "gloss": "NOIR",
+      "fr": "noir",
+      "en": "black",
+      "category": "Couleurs"
+    },
+    {
+      "gloss": "BLANC",
+      "fr": "blanc",
+      "en": "white",
+      "category": "Couleurs"
+    }
+  ]
+}

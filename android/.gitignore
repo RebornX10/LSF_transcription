@@ -1,0 +1,12 @@
+# Android / Gradle build artifacts
+.gradle/
+build/
+app/build/
+local.properties
+*.iml
+.idea/
+captures/
+.cxx/
+
+# The MediaPipe model is downloaded by fetch_model.sh (too big to commit)
+app/src/main/assets/holistic_landmarker.task
