@@ -31,10 +31,12 @@
   const proc = document.createElement("canvas");   // offscreen capture canvas
   const pctx = proc.getContext("2d");
 
-  // --- Tuning (max speed) ---
-  const PROC_WIDTH = 480;        // frame width sent to the server
-  const JPEG_QUALITY = 0.6;
-  const TARGET_FPS = 12;         // capture/processing cap
+  // --- Tuning (max speed for CPU hosts like HF free tier) ---
+  // Lower PROC_WIDTH = much faster MediaPipe + smaller uploads. Raise it (e.g.
+  // 480) on a fast machine for crisper landmarks.
+  const PROC_WIDTH = 320;        // frame width sent to the server
+  const JPEG_QUALITY = 0.5;
+  const TARGET_FPS = 15;         // capture/processing cap (self-paced, no pile-up)
   const FRAME_BUDGET = 1000 / TARGET_FPS;
 
   let words = [];
@@ -51,6 +53,29 @@
   const POSE = [ // upper-body subset: shoulders, arms, torso, face line
     [11,12],[11,13],[13,15],[12,14],[14,16],
     [11,23],[12,24],[23,24],[0,11],[0,12],
+  ];
+  // Face mesh contours (standard MediaPipe indices): eyes, brows, lips, oval.
+  const FACE = [
+    // left eye
+    [33,7],[7,163],[163,144],[144,145],[145,153],[153,154],[154,155],[155,133],
+    [33,246],[246,161],[161,160],[160,159],[159,158],[158,157],[157,173],[173,133],
+    // right eye
+    [362,382],[382,381],[381,380],[380,374],[374,373],[373,390],[390,249],[249,263],
+    [263,466],[466,388],[388,387],[387,386],[386,385],[385,384],[384,398],[398,362],
+    // eyebrows
+    [70,63],[63,105],[105,66],[66,107],[46,53],[53,52],[52,65],[65,55],
+    [300,293],[293,334],[334,296],[296,336],[276,283],[283,282],[282,295],[295,285],
+    // outer lips
+    [61,146],[146,91],[91,181],[181,84],[84,17],[17,314],[314,405],[405,321],[321,375],[375,291],
+    [61,185],[185,40],[40,39],[39,37],[37,0],[0,267],[267,269],[269,270],[270,409],[409,291],
+    // inner lips
+    [78,95],[95,88],[88,178],[178,87],[87,14],[14,317],[317,402],[402,318],[318,324],[324,308],
+    [78,191],[191,80],[80,81],[81,82],[82,13],[13,312],[312,311],[311,310],[310,415],[415,308],
+    // face oval
+    [10,338],[338,297],[297,332],[332,284],[284,251],[251,389],[389,356],[356,454],[454,323],
+    [323,361],[361,288],[288,397],[397,365],[365,379],[379,378],[378,400],[400,377],[377,152],
+    [152,148],[148,176],[176,149],[149,150],[150,136],[136,172],[172,58],[58,132],[132,93],
+    [93,234],[234,127],[127,162],[162,21],[21,54],[54,103],[103,67],[67,109],[109,10],
   ];
 
   function post(url, body) {
@@ -159,9 +184,9 @@
     const W = overlay.width, H = overlay.height;
     ctx.clearRect(0, 0, W, H);
     if (!lm) return;
-    const draw = (pts, conns, color, dots) => {
+    const draw = (pts, conns, color, dots, lw) => {
       if (!pts) return;
-      ctx.strokeStyle = color; ctx.lineWidth = 2;
+      ctx.strokeStyle = color; ctx.lineWidth = lw || 2;
       ctx.beginPath();
       for (const [a, b] of conns) {
         if (!pts[a] || !pts[b]) continue;
@@ -169,13 +194,15 @@
         ctx.lineTo(pts[b][0] * W, pts[b][1] * H);
       }
       ctx.stroke();
-      if (!dots) return;                  // skip joint dots for pose (legs clutter)
+      if (!dots) return;                  // skip joint dots for pose/face (clutter)
       ctx.fillStyle = color;
       for (const p of pts) { ctx.beginPath(); ctx.arc(p[0] * W, p[1] * H, 2.5, 0, 6.283); ctx.fill(); }
     };
-    draw(lm.pose, POSE, "#5ad1ff", false);
-    draw(lm.left_hand, HAND, "#2ee6a6", true);
-    draw(lm.right_hand, HAND, "#ffd166", true);
+    // Face first (thin, underneath), then body, then hands on top.
+    draw(lm.face, FACE, "rgba(150,210,230,0.55)", false, 1);
+    draw(lm.pose, POSE, "#5ad1ff", false, 2);
+    draw(lm.left_hand, HAND, "#2ee6a6", true, 2);
+    draw(lm.right_hand, HAND, "#ffd166", true, 2);
   }
 
   function renderReco(reco) {

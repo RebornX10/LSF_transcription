@@ -77,20 +77,21 @@ class LandmarkFrame:
 def points_payload(frame: "LandmarkFrame") -> dict:
     """Compact 2D points for the browser to draw the skeleton.
 
-    Only pose + both hands are sent (face mesh is omitted to keep the payload
-    tiny and the overlay clean); x/y are the normalised image coords [0, 1].
-    Rounded to 4 decimals to shrink the JSON.
+    Pose + both hands (4 dp) and the face mesh (3 dp — it has hundreds of points
+    so coarser rounding keeps the JSON small). x/y are normalised image coords
+    [0, 1]. The browser draws face *contours* (eyes, brows, lips, oval) from this.
     """
 
-    def xy(arr):
+    def xy(arr, nd=4):
         if arr is None:
             return None
-        return [[round(float(x), 4), round(float(y), 4)] for x, y in arr[:, :2]]
+        return [[round(float(x), nd), round(float(y), nd)] for x, y in arr[:, :2]]
 
     return {
         "pose": xy(frame.pose),
         "left_hand": xy(frame.left_hand),
         "right_hand": xy(frame.right_hand),
+        "face": xy(frame.face, 3),
     }
 
 
