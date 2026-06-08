@@ -1,0 +1,14 @@
+# Core computer-vision / landmark detection
+opencv-python==4.10.0.84
+mediapipe==0.10.14
+numpy==1.26.4
+
+# Web UI + production serving
+Django==4.2.16
+gunicorn==23.0.0
+whitenoise==6.7.0
+
+# Optional: monocular depth fallback when no dual-pixel depth stream is
+# available. Heavy (pulls in torch); install only if you want depth on a
+# regular webcam. The app runs fine without it.
+#   pip install torch torchvision timm

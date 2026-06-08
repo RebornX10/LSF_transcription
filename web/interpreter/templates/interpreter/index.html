@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interprète LSF — Langue des Signes Française</title>
+  <link rel="stylesheet" href="{% static 'interpreter/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Interprète <span>LSF</span></h1>
+    <div class="status" id="status">
+      <span class="pill" id="pill-depth">depth: …</span>
+      <span class="pill" id="pill-fps">fps: …</span>
+      <span class="pill" id="pill-trained">appris: …</span>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <!-- LEFT: live feed (top) + transcription (bottom) -->
+    <div class="col-left">
+      <section class="camera" aria-label="Flux caméra avec squelette">
+        <div class="stage" id="stage">
+          <video id="cam" autoplay playsinline muted></video>
+          <canvas id="overlay"></canvas>
+        </div>
+        <div class="cam-hint" id="cam-hint">Autorisez la caméra pour démarrer…</div>
+        <div class="train-banner hidden" id="train-banner">
+          <div class="train-text">
+            <span class="rec-dot">●</span>
+            Performez le signe : <strong id="train-word">—</strong>
+          </div>
+          <div class="train-actions">
+            <button class="btn" id="btn-save">Sauvegarder</button>
+            <button class="btn btn-ghost" id="btn-cancel">Annuler</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="transcript" aria-label="Transcription">
+        <div class="section-head">
+          <h2>Transcription</h2>
+          <button class="btn btn-ghost btn-sm" id="btn-clear">Effacer</button>
+        </div>
+        <div id="transcript-stream" class="stream">
+          <p class="placeholder">La transcription apparaîtra ici…</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT: vocabulary browser + training -->
+    <aside class="col-right">
+      <section class="vocab">
+        <div class="section-head">
+          <h2>Vocabulaire LSF</h2>
+          <span class="muted" id="vocab-count">…</span>
+        </div>
+
+        <div class="vocab-controls">
+          <input type="search" id="search" placeholder="Rechercher un mot…" autocomplete="off">
+          <select id="category"><option value="">Toutes catégories</option></select>
+        </div>
+
+        <form class="add-row" id="add-form">
+          <input type="text" id="add-fr" placeholder="Ajouter un mot (ex. ordinateur)" autocomplete="off">
+          <button class="btn btn-sm" type="submit">Ajouter</button>
+        </form>
+
+        <div class="word-list" id="word-list"></div>
+      </section>
+    </aside>
+  </main>
+
+  <script src="{% static 'interpreter/app.js' %}"></script>
+</body>
+</html>

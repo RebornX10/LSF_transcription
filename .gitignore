@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+models/*.h5
+web/staticfiles/
+.DS_Store
