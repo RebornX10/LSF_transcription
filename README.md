@@ -8,7 +8,7 @@ app_port: 7860
 pinned: false
 ---
 
-DISCLAIMER: Used claude for django, UIm Gunicorn and some comments (and maybe git)
+DISCLAIMER: Used claude for django, UI, Gunicorn and some comments (and maybe git)
 
 # LSF_transcripter — French Sign Language interpreter
 
