@@ -23,15 +23,13 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: "8.7"
 
       - name: Download MediaPipe model into assets
         run: bash fetch_model.sh
         working-directory: android
 
       - name: Build debug APK
-        run: gradle assembleDebug --no-daemon --stacktrace
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
         working-directory: android
 
       - name: Upload APK
