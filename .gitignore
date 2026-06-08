@@ -3,4 +3,5 @@ __pycache__/
 *.pyc
 models/*.h5
 web/staticfiles/
+.claude/
 .DS_Store
