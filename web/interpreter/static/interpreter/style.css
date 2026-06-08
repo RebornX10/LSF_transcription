@@ -87,8 +87,27 @@ body {
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--border);
-  transform: scaleX(-1); /* selfie mirror (video + overlay together) */
   background: #000;
+}
+/* Mirror only the selfie (front) camera; rear/main camera is not mirrored. */
+.stage.mirror { transform: scaleX(-1); }
+
+.cam-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+.cam-controls select {
+  max-width: 170px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(13, 17, 23, 0.85);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
 }
 .stage video,
 .stage canvas {

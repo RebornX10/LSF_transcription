@@ -14,6 +14,8 @@
   const overlay = $("overlay");
   const stage = $("stage");
   const camHint = $("cam-hint");
+  const camSelect = $("cam-select");
+  const camFlip = $("cam-flip");
   const stream = $("transcript-stream");
   const wordList = $("word-list");
   const search = $("search");
@@ -43,6 +45,8 @@
   let recordingGloss = null;
   let inFlight = false;
   let running = false;
+  let loopStarted = false;
+  let currentFacing = "user";   // "user" = selfie, "environment" = main/back
 
   // MediaPipe connection topology (indices), for drawing the skeleton in JS.
   const HAND = [
@@ -94,22 +98,62 @@
   }
 
   // ---- Camera ----
+  function stopStream() {
+    const s = video.srcObject;
+    if (s) s.getTracks().forEach((t) => t.stop());
+    video.srcObject = null;
+  }
+
+  async function startStream(constraints) {
+    stopStream();
+    const s = await navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject = s;
+    await video.play();
+    camHint.classList.add("hidden");
+    const track = s.getVideoTracks()[0];
+    applyMirror(track);
+    sizeCanvas();
+    detectDualPixel(track);
+    await listCameras(track);
+    running = true;
+    if (!loopStarted) { loopStarted = true; loop(); }
+  }
+
   async function initCamera() {
     try {
-      const s = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
+      await startStream({
+        video: { facingMode: currentFacing, width: { ideal: 640 }, height: { ideal: 480 } },
         audio: false,
       });
-      video.srcObject = s;
-      await video.play();
-      camHint.classList.add("hidden");
-      sizeCanvas();
-      detectDualPixel(s.getVideoTracks()[0]);
-      running = true;
-      loop();
     } catch (e) {
       camHint.textContent = "Caméra refusée ou indisponible : " + (e.message || e.name);
     }
+  }
+
+  // Mirror the front (selfie) camera only; leave the rear/main camera as-is.
+  function applyMirror(track) {
+    const f = (track.getSettings && track.getSettings().facingMode) || "";
+    const isFront = f ? f === "user" : !/back|rear|environment/i.test(track.label || "");
+    currentFacing = isFront ? "user" : "environment";
+    stage.classList.toggle("mirror", isFront);
+  }
+
+  async function listCameras(activeTrack) {
+    try {
+      const devs = (await navigator.mediaDevices.enumerateDevices())
+        .filter((d) => d.kind === "videoinput");
+      if (devs.length <= 1) { camSelect.style.display = "none"; }
+      else { camSelect.style.display = ""; }
+      const activeId = activeTrack && activeTrack.getSettings ? activeTrack.getSettings().deviceId : "";
+      camSelect.innerHTML = "";
+      devs.forEach((d, i) => {
+        const o = document.createElement("option");
+        o.value = d.deviceId;
+        o.textContent = d.label || `Caméra ${i + 1}`;
+        if (d.deviceId === activeId) o.selected = true;
+        camSelect.appendChild(o);
+      });
+    } catch (_) { /* enumerate may fail before permission */ }
   }
 
   function sizeCanvas() {
@@ -334,6 +378,17 @@
     post("/transcript/clear").then(() => {
       stream.innerHTML = '<p class="placeholder">La transcription apparaîtra ici…</p>';
     });
+  });
+
+  // Camera selection: pick a specific device, or flip front/back.
+  camSelect.addEventListener("change", () => {
+    startStream({ video: { deviceId: { exact: camSelect.value } }, audio: false })
+      .catch((e) => toast("Caméra : " + (e.message || e.name)));
+  });
+  camFlip.addEventListener("click", () => {
+    const next = currentFacing === "user" ? "environment" : "user";
+    startStream({ video: { facingMode: { ideal: next } }, audio: false })
+      .catch((e) => toast("Bascule impossible : " + (e.message || e.name)));
   });
 
   // ---- Boot ----
