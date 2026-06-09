@@ -169,6 +169,18 @@ different speed/framing) for better accuracy. Note: there is no public drop-in
 *pre-trained LSF model* — reference clips (filmed by you or any LSF video you're
 allowed to use) are how the vocabulary gets "pre-trained".
 
+**Auto-train from the Elix dictionary.** [tools/elix_train.py](tools/elix_train.py)
+fetches each catalogue word's reference sign video from
+[dico.elix-lsf.fr](https://dico.elix-lsf.fr/) and trains a template from it —
+**72 of the 81 words ship pre-trained** this way:
+```bash
+python tools/elix_train.py            # all words   (or --words BONJOUR MERCI …)
+```
+It rate-limits and identifies itself; robots.txt permits crawling. The Elix
+videos are © Signes de sens — this derives abstract landmark templates for
+personal/on-device use and does **not** redistribute the videos. The 9 unmatched
+words are multi-word phrases (AU REVOIR, ÇA VA, …) — record those by hand.
+
 ---
 
 ## Layout
