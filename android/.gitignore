@@ -10,3 +10,7 @@ captures/
 
 # The MediaPipe model is downloaded by fetch_model.sh (too big to commit)
 app/src/main/assets/holistic_landmarker.task
+
+# Seeded from ../signs at build time (single source of truth in signs/)
+app/src/main/assets/lexicon.json
+app/src/main/assets/lsf_signs.json

@@ -36,7 +36,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        recognizer = Recognizer(File(filesDir, "lsf_signs.json"))
+        // Seed the on-device template store from the bundled pre-trained set on
+        // first launch (Elix-trained); later the user's own samples append to it.
+        val store = File(filesDir, "lsf_signs.json")
+        if (!store.exists()) {
+            runCatching {
+                assets.open("lsf_signs.json").use { input ->
+                    store.outputStream().use { input.copyTo(it) }
+                }
+            }
+        }
+        recognizer = Recognizer(store)
         lexicon = Lexicon(this)
         cameraExecutor = Executors.newSingleThreadExecutor()
         binding.depthStatus.text = DepthCapability.describe(this)

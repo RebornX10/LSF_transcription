@@ -14,6 +14,8 @@ recognised with the same **DTW learn-by-example** engine as the desktop/web app
 - Learn-by-example training: pick a word from the bundled ~80-word LSF
   catalogue, **Entraîner** → sign → **Sauvegarder**. Templates persist on-device.
 - Live transcription at the bottom.
+- **Ships pre-trained**: ~72 signs (trained from Elix videos) are bundled and
+  seeded into the on-device store on first launch; your own samples add to them.
 
 ## Build
 ✅ Verified building: Gradle 8.7, AGP 8.5.2, JDK 17, SDK 34 → a 64 MB

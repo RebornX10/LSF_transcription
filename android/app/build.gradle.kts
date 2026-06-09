@@ -60,3 +60,14 @@ dependencies {
     // MediaPipe Tasks Vision (HolisticLandmarker)
     implementation("com.google.mediapipe:tasks-vision:0.10.14")
 }
+
+// Bundle the LSF lexicon + pre-trained templates from ../signs into assets at
+// build time, so signs/ stays the single source of truth (no duplicated data
+// committed under android/).
+val seedAssets by tasks.registering(Copy::class) {
+    from(rootProject.file("../signs")) {
+        include("lexicon.json", "lsf_signs.json")
+    }
+    into(layout.projectDirectory.dir("src/main/assets"))
+}
+tasks.named("preBuild") { dependsOn(seedAssets) }
