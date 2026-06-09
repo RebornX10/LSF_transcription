@@ -106,6 +106,11 @@ to your terminal in *System Settings ▸ Privacy & Security ▸ Camera*.
 
 ## Run
 
+**Quick start — one command (creates the venv on first run):**
+```bash
+./run.sh            # → http://127.0.0.1:8000   (ships pre-trained, 72 LSF signs)
+```
+
 **Web UI (Django) — everything is in the browser, no terminal needed:**
 ```bash
 python web/manage.py runserver

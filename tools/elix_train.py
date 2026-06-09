@@ -53,12 +53,25 @@ def fetch(url: str) -> bytes:
         return resp.read()
 
 
-def find_video_url(html: str) -> str | None:
-    m = VIDEO_RE.search(html)
-    if m:
-        return m.group(1)
-    m = ANY_MP4_RE.search(html)
-    return m.group(0) if m else None
+def find_video_urls(html: str, limit: int) -> list[str]:
+    """Distinct sign-video URLs on a page, in order, re-encode copies collapsed.
+
+    Elix serves several files per word: the sign(s), plus `-2`/`-3`/`-encoded`
+    re-encodes of the same clip. We group by the base filename (dropping those
+    trailing markers) so each entry is a genuinely different rendition.
+    """
+    urls = VIDEO_RE.findall(html) or ANY_MP4_RE.findall(html)
+    seen: set[str] = set()
+    out: list[str] = []
+    for u in urls:
+        base = re.sub(r"(-encoded)?(-\d+)?\.mp4$", "", u.rsplit("/", 1)[-1])
+        if base in seen:
+            continue
+        seen.add(base)
+        out.append(u)
+        if len(out) >= limit:
+            break
+    return out
 
 
 def _slug(fr: str, *, keep_accents: bool, apostrophe: str) -> str:
@@ -93,6 +106,10 @@ def main() -> int:
     p.add_argument("--limit", type=int, default=0, help="Only the first N words.")
     p.add_argument("--words", nargs="*", help="Only these glosses.")
     p.add_argument("--delay", type=float, default=1.0, help="Seconds between requests.")
+    p.add_argument("--count", type=int, default=1,
+                   help="Distinct videos to train per word (= samples added).")
+    p.add_argument("--skip", type=int, default=0,
+                   help="Skip the first N videos (e.g. --skip 1 --count 1 adds only the 2nd).")
     args = p.parse_args()
 
     lex = Lexicon(args.lexicon)
@@ -112,54 +129,60 @@ def main() -> int:
     recognizer = SignRecognizer(templates_path=args.templates, use_heuristics=False)
     tracker = HolisticTracker()
 
-    trained = 0
+    samples = 0
+    added_words = 0
     skipped: list[str] = []
     try:
         for i, w in enumerate(words, 1):
             gloss, fr = w["gloss"], w.get("fr", w["gloss"])
             print(f"[{i}/{len(words)}] {gloss}")
-            video_url = None
+            urls: list[str] = []
             for page in candidate_urls(fr):
                 try:
                     html = fetch(page).decode("utf-8", "ignore")
                 except Exception as exc:
                     print(f"  ! fetch failed ({page}): {exc}")
                     continue
-                video_url = find_video_url(html)
-                if video_url:
+                urls = find_video_urls(html, args.skip + args.count)
+                if urls:
                     break
                 time.sleep(0.3)  # politeness between candidate tries
-            if not video_url:
-                print("  ! no sign video found — skipped")
+
+            selected = urls[args.skip : args.skip + args.count]
+            if not selected:
+                print("  ! no (additional) sign video found — skipped")
                 skipped.append(gloss)
                 continue
 
-            path = os.path.join(cache, f"{cache_name(gloss)}.mp4")
-            if not os.path.exists(path):
-                try:
-                    data = fetch(video_url)
-                    with open(path, "wb") as fh:
-                        fh.write(data)
-                    print(f"  ↓ {os.path.basename(video_url)} ({len(data)//1024} KB)")
-                except Exception as exc:
-                    print(f"  ! video download failed: {exc}")
-                    skipped.append(gloss)
-                    continue
+            got = 0
+            for idx, video_url in enumerate(selected, start=args.skip):
+                path = os.path.join(cache, f"{cache_name(gloss)}_{idx}.mp4")
+                if not os.path.exists(path):
+                    try:
+                        data = fetch(video_url)
+                        with open(path, "wb") as fh:
+                            fh.write(data)
+                        print(f"  ↓ {os.path.basename(video_url)} ({len(data)//1024} KB)")
+                    except Exception as exc:
+                        print(f"  ! download failed: {exc}")
+                        continue
+                if import_clip(tracker, recognizer, gloss, path):
+                    samples += 1
+                    got += 1
+                time.sleep(args.delay)
 
-            if import_clip(tracker, recognizer, gloss, path):
-                trained += 1
+            if got:
+                added_words += 1
             else:
                 skipped.append(gloss)
-
-            time.sleep(args.delay)
     finally:
         tracker.close()
 
-    print(f"\nTrained {trained}/{len(words)} signs into {args.templates}.")
+    print(f"\nAdded {samples} sample(s) across {added_words}/{len(words)} words -> {args.templates}.")
     if skipped:
         print(f"Skipped ({len(skipped)}): {', '.join(skipped)}")
     print(f"Videos cached in: {cache}")
-    return 0 if trained else 1
+    return 0 if samples else 1
 
 
 if __name__ == "__main__":
